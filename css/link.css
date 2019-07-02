@@ -1,0 +1,564 @@
+/* Writing CSS is like having ass cancer in your eyes */
+
+
+
+.link-r 
+{
+  
+position: absolute;
+  
+top: 0px;
+  
+right: 0px;
+  
+margin: 0px;
+  
+padding: 0px;
+  
+height: 36px;
+  
+background-color: rgba(0, 0, 0, 0.0);
+
+}
+
+.link-git
+{
+  
+cursor: pointer;
+  
+display: inline-block;
+  
+width: 72px;
+  
+height: 72px;
+  
+background-image: url(../img/home/git.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 64px 64px;
+
+}
+
+
+
+.link-git:hover 
+{
+  
+background-image: url(../img/home/git-inv.png);
+
+}
+
+
+.link-disc 
+{
+  
+cursor: pointer;
+  
+display: inline-block;
+  
+width: 72px;
+  
+height: 72px;
+  
+background-image: url(../img/home/disc.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 72px 72px;
+
+}
+
+
+
+.link-disc:hover 
+{
+  
+background-image: url(../img/home/disc-inv.png);
+
+}
+
+
+
+.link-twit 
+{
+  
+cursor: pointer;
+  
+display: inline-block;
+  
+width: 36px;
+  
+height: 36px;
+  
+background-image: url(../img/home/twit.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 36px 36px;
+
+}
+
+
+
+.link-twit:hover 
+{
+  
+background-image: url(../img/home/twit-inv.png);
+
+}
+
+
+
+.link-patr 
+{
+  
+cursor: pointer;
+  
+display: inline-block;
+  
+width: 36px;
+  
+height: 36px;
+  
+background-image: url(../img/home/patr.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 36px 36px;
+
+}
+
+
+
+.link-patr:hover 
+{
+  
+background-image: url(../img/home/patr-inv.png);
+
+}
+
+
+
+.link-l 
+{
+  
+position: absolute;
+  
+top: 0px;
+  
+left: 0px;
+  
+margin-top: 6px;
+  
+margin-left: 6px;
+  
+padding: 0px;
+  
+background-color: rgba(0, 0, 0, 0.0);
+
+}
+
+
+
+.link-patch 
+{
+  
+font-family: SmbWeb;
+  
+color: #FFFFFF;
+  
+cursor: pointer;
+  
+display: inline-block;
+  
+font-weight: bold;
+  
+font-size: 18px;
+
+}
+
+
+
+.link-patch:hover 
+{
+  
+text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+
+}
+
+
+
+.link-b 
+{
+  
+position: absolute;
+  
+bottom: 0px;
+  
+right: 0px;
+  
+margin-top: 6px;
+  
+margin-left: 6px;
+  
+padding: 0px;
+  
+background-color: rgba(0, 0, 0, 0.0);
+
+}
+
+
+
+.link-con 
+{
+  
+cursor: pointer;
+  
+display: inline-block;
+  
+width: 36px;
+  
+height: 36px;
+  
+background-image: url(../img/home/con.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 36px 36px;
+  
+margin-right: 6px;
+
+}
+
+
+
+.link-con:hover 
+{
+  
+background-image: url(../img/home/con-inv.png);
+
+}
+
+
+
+.link-w 
+{
+  
+position: absolute;
+  
+bottom: 0px;
+  
+left: 0px;
+  
+width: 100%;
+  
+overflow: hidden;
+  
+background-color: rgba(0, 0, 0, 0.75);
+  
+z-index:-2;
+  
+padding-top: 10px;
+
+}
+
+
+
+.link-s 
+{
+  
+position: absolute;
+  
+bottom: 9px;
+  
+left: 0px;
+  
+margin-top: 6px;
+  
+margin-left: 6px;
+  
+padding: 0px;
+  
+background-color: rgba(0, 0, 0, 0.0);
+
+}
+
+
+.win 
+{
+  
+margin: 4px;
+  
+font-family: SmbWeb;
+  
+font-size: 18px;
+  
+color: white;
+  
+text-shadow: 0 0 5px rgba(255,255,255,0.5);
+  
+z-index:1;
+  
+margin-left: 12px;
+
+}
+
+
+
+.kill 
+{
+  
+font-size: 18px;
+
+}
+
+
+
+.rtfpn 
+{
+  
+position: absolute;
+  
+bottom: 0px;
+  
+right: 0px;
+  
+width: 844px;
+  
+height: 378px;
+  
+background-image: url(../img/home/rtfpn.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 844px 378px;
+  
+z-index:-1;
+
+}
+
+
+
+@media only screen and (max-width: 769px) 
+{
+  
+.rtfpn 
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+
+
+.rtfpn2 
+{
+  
+position: absolute;
+  
+top: 0px;
+  
+left: 0px;
+  
+width: 844px;
+  
+height: 378px;
+  
+background-image: url(../img/home/rtfpn2.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 844px 378px;
+  
+z-index:-1;
+
+}
+
+
+
+@media only screen and (max-width: 769px)
+{
+  
+.rtfpn2 
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+@media only screen and (max-height: 650px)
+{
+  
+.rtfpn2 
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+
+.rtfpn3 
+{
+  
+position: absolute;
+  
+top: 0px;
+  
+right: 0px;
+  
+width: 844px;
+  
+height: 378px;
+  
+background-image: url(../img/home/rtfpn3.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 844px 378px;
+  
+z-index:-1;
+
+}
+
+
+
+@media only screen and (max-width: 769px) 
+{
+  
+.rtfpn3 
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+@media only screen and (max-height: 650px)
+{
+  
+.rtfpn3
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+
+.rtfpn4 
+{
+  
+position: absolute;
+  
+bottom: 9px;
+  
+left: 0px;
+  
+width: 844px;
+  
+height: 378px;
+  
+background-image: url(../img/home/rtfpn4.png);
+  
+background-repeat: no-repeat;
+  
+background-position: center;
+  
+background-size: 844px 378px;
+  
+z-index:-1;
+
+}
+
+
+
+@media only screen and (max-width: 769px) 
+{
+  
+.rtfpn4 
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+
+
+@media only screen and (max-height: 650px)
+{
+  
+.rtfpn4 
+{
+    
+display: none;
+    
+width: 0px;
+    
+height: 0px;
+  
+}
+
+}
+
+@media only screen and (max-width: 769px) 
+{
+  
+.link-patch 
+{
+    
+font-size: 12px;
+  
+}
+
+}
