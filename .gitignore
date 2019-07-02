@@ -1,0 +1,8 @@
+audio/
+img/
+font/
+game/
+img/
+*.txt
+*.webmanifest
+*.json

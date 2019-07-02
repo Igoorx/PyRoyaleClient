@@ -133,7 +133,7 @@ img {
 .private {
   cursor: pointer;
   margin-left: 6px;
-  float: left;
+  float: right;
 
   animation: 1s infinite alternate;
 }
