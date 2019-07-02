@@ -108,6 +108,10 @@ img {
   }
 }
 
+.container-bottom {
+  font-size: 32px;
+}
+
 .container-go {
   font-size: 32px;
   text-align: center;
@@ -122,8 +126,16 @@ img {
 .launch {
   cursor: pointer;
   margin-left: 6px;
-   
+
   animation: glow 1s infinite alternate;
+}
+
+.private {
+  cursor: pointer;
+  margin-left: 6px;
+  float: left;
+
+  animation: 1s infinite alternate;
 }
 
 @media only screen and (max-width: 769px) {
