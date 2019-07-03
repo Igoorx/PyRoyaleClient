@@ -5,13 +5,14 @@ var VERSION = (function() {
     return myScript.src.split("?v=").slice(-1)[0];
 })();
 
-function include(script) {
-    var elem = document.createElement("script");
-    elem.setAttribute("src", script+"?v="+VERSION);
-    elem.setAttribute("type", "text/javascript");
-    document.body.appendChild(elem);
+var scripts = ["js/server.js", "js/url.js", "js/game.min.js"]
+
+function loadNext() {
+    if (scripts.length == 0) return;
+    var next = scripts.shift();
+    $.getScript(next, function(){
+        loadNext();
+    });
 }
 
-include("js/server.js");
-include("js/url.js");
-include("js/game.min.js");
+loadNext();
