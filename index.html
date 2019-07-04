@@ -19,7 +19,10 @@
         </script>
     </head>
     
-    <body id='body' ondragstart="return false;" ondrop="return false;" style='display: none;'>      
+    <body id='body' ondragstart="return false;" ondrop="return false;">
+      <div id="log">
+        <p class="debugLog">loading scripts...</p>
+      </div>
       <!-- Links -->
       <div id='link'>
         <div class="link-r">
@@ -29,10 +32,10 @@
         </div>
         <div class="link-l">
           <div class="rtfpn2"></div>
-          <div class="link-patch" onclick="window.open('./patch.html?v=2.1.6')">v2.1.6 Patch Notes</div>
+          <div id="link-patch" class="link-patch" onclick="window.open('./patch.html?v=2.1.6')" style="display:none;">v2.1.6 Patch Notes</div>
         </div>
         <div class="link-w">
-          <div id='win' class="win" style="display: none"></div>
+          <div id='win' class="win" style="display:none;"></div>
         </div>
         <div class="link-b">
           <div class="rtfpn"></div>
@@ -44,7 +47,7 @@
       </div>
             
       <!-- Warning -->
-      <div id='warn' class='warn'></div>
+      <div id='warn' class='warn' style="display:none;"></div>
       
       <!-- Error -->
       <div id='error' class='container-center'>
@@ -71,7 +74,7 @@
         <div class='title'>Mario Royale</div>
         <div class='container-launch'>
           <span id ='main-launch' class='launch'>Play Now!</span>
-          <span class='players'><span id='main-number' class='player-number'>##</span> Online</span>
+          <span class='players'><span id='main-number' class='player-number' style="display:none;">##</span> Online</span>
         </div>
       </div>
       
@@ -100,5 +103,5 @@
       
       <!-- Core -->
       <script src='js/core.js?v=2.1.6'></script>
-    </body>        
+    </body>
 </html>
