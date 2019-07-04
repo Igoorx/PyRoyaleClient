@@ -23,6 +23,7 @@
       <div id="log">
         <p class="debugLog">loading scripts...</p>
       </div>
+      
       <!-- Links -->
       <div id='link'>
         <div class="link-r">
@@ -87,6 +88,12 @@
             <span id ='name-private' class='private'>[ ]Private Room</span>
             <span id ='name-launch' class='launch'>Go!</span>
           </div>
+        </div>
+      </div>
+
+      <div id='return' class='container-center' style='top: 90%; display: none;'>
+        <div class='container-bottom'>
+          <span id='return-lobby' class='launch' onclick='Cookies.set("go_to_lobby", "1");location.reload();'>Return to Lobby</span>
         </div>
       </div>
       
