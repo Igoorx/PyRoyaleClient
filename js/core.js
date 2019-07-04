@@ -1,3 +1,11 @@
+function print(text) {
+    var elem = document.createElement("p");
+    elem.innerText = text;
+    elem.setAttribute("class", "debugLog");
+    document.getElementById("log").appendChild(elem);
+}
+print("loading core.js started");
+
 var VERSION = (function() {
     var scripts = document.getElementsByTagName('script');
     var index = scripts.length - 1;
@@ -20,5 +28,7 @@ function loadNext() {
         cache: true
     });
 }
+
+print("loading core.js finished");
 
 loadNext();
