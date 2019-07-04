@@ -10,8 +10,14 @@ var scripts = ["js/server.js", "js/url.js", "js/game.min.js"]
 function loadNext() {
     if (scripts.length == 0) return;
     var next = scripts.shift();
-    $.getScript(next, function(){
-        loadNext();
+    $.ajax({
+        type: "GET",
+        url: next + '?v=' + VERSION, 
+        success: function() {
+            loadNext();
+        },
+        dataType: "script",
+        cache: true
     });
 }
 
