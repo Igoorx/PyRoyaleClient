@@ -276,3 +276,20 @@ img {
   font-family: SmbWeb;
   color: black;
 }
+
+.skin-select-button {
+  text-align:left;
+  display:inline-block;
+  width: 16px;
+  height: 16px;
+  border:2px solid black;
+  background: url('../img/game/smb_skin0.png') -208px 0px;
+}
+
+.skin-select {
+    width: auto;
+    margin-top: 8px;
+    text-align:center;
+    transform: scale(2);
+    background-color: rgb(107,140,255);
+}
