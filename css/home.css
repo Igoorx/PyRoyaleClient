@@ -293,3 +293,17 @@ img {
     transform: scale(2);
     background-color: rgb(107,140,255);
 }
+
+.container-return {
+  font-family: SmbWeb;
+  font-size: 32px;
+  color: #FFFFFF;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-90%);
+  white-space: nowrap;
+}
