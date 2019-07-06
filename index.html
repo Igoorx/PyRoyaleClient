@@ -93,15 +93,27 @@
         </div>
       </div>
 
-      <div id='return' class='container-return' style='display: none;'>
-        <span id='return-lobby' class='launch' onclick='Cookies.set("go_to_lobby", "1");location.reload();'>Return to Lobby</span>
-      </div>
-      
       <!-- Game -->
       <div id='game' class='fullscreen' oncontextmenu="return false">
           <canvas id="game-canvas" width="320" height="240">
             Your browser doesn't appear to support the <code>&lt;canvas&gt;</code> element.
           </canvas>
+      </div>
+      
+      <!-- Private match settings -->
+      <div id='privLobby' class='container-privLobby' style='display: none;'>
+        <div class='dis-lg'>World Select</div>
+        <div id="levelSelectStandard" class="levelSelectRow">
+        </div>
+        <div class="levelSelectRow">
+            <div id="levelSelectCustom" class='levelSelectButton'>Custom</div>
+            <input type="file" id="levelSelectInput" name="levelSelectInput[]"></input>
+        <div>
+        <div id="levelSelectCustomResult" class="levelSelectRow">&nbsp;<div>
+      </div>
+
+      <div id='return' class='container-return' style='display: none;'>
+        <span id='return-lobby' class='launch' onclick='Cookies.set("go_to_lobby", "1");location.reload();'>Return to Lobby</span>
       </div>
       
       <!-- Libs -->
