@@ -4,8 +4,6 @@ function print(text) {
     elem.setAttribute("class", "debugLog");
     document.getElementById("log").appendChild(elem);
 }
-print("loading core.js started");
-
 var VERSION = (function() {
     var scripts = document.getElementsByTagName('script');
     var index = scripts.length - 1;
@@ -18,6 +16,7 @@ var scripts = ["js/server.js", "js/url.js", "js/game.min.js"]
 function loadNext() {
     if (scripts.length == 0) return;
     var next = scripts.shift();
+    print("loading "+next.split("/").pop()+" started");
     $.ajax({
         type: "GET",
         url: next + '?v=' + VERSION, 
