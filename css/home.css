@@ -307,3 +307,28 @@ img {
   transform: translateX(-50%) translateY(-90%);
   white-space: nowrap;
 }
+
+.container-privLobby {
+  font-family: SmbWeb;
+  color: #FFFFFF;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  background: black;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  white-space: nowrap;
+}
+
+.levelSelectButton {
+    display: inline-block;
+    margin: 2px 2px 2px 2px;
+    padding: 2px 2px 2px 2px;
+    border:2px solid black;
+}
+.levelSelectRow {
+    text-align: center;
+    margin: 2px;
+}
