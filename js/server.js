@@ -1,4 +1,3 @@
-var WEBSOCKET_SERVER = "marioroyale.co.uk";
-//var WEBSOCKET_SERVER = "127.0.0.1:9000";
-var WEBSOCKET_PROTOCOL = "ws";
+var WEBSOCKET_SERVER = "wss://marioroyale.co.uk/royale/ws";
+//var WEBSOCKET_SERVER = "ws://127.0.0.1:9000/royale/ws";
 print("loading server.js finished");
