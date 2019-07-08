@@ -112,13 +112,49 @@
       <div id='main' class='container-center'>
         <div class='title'>Mario Royale</div>
         <div class='container-launch'>
-          <span id ='main-launch' class='launch'>Play Now!</span>
+          <span id ='main-launch' class='launch'>Guest</span>
           <span class='players'><span id='main-number' class='player-number' style="display:none;">?</span> Online</span>
+        </div>
+        <div class="container-launch">
+          <span id ='main-login' class='launch'>Login</span>
+        </div>
+        <div class="container-launch">
+          <span id ='main-register' class='launch'>Register</span>
         </div>
       </div>
       
-      <!-- Enter Name -->
-      <div id='name' class='container-center'>
+      <!-- Main Menu (logged in) -->
+      <div id='mainAsMember' class='container-center' style='display: none;'>
+        <div class='title'>Mario Royale</div>
+        <div class='container-launch'>
+          <span id ='mainAsMember-private' class='private'>[ ]Private Room</span>
+          <span id ='mainAsMember-launch' class='launch'>Play Now</span>
+        </div>
+        <div class="container-launch">
+          <span id ='mainAsMember-profile' class='launch'>Profile</span>
+        </div>
+        <div class="container-launch">
+          <span id ='mainAsMember-logout' class='launch'>Logout</span>
+        </div>
+      </div>
+
+      <!-- Player profile -->
+      <div id='profile' class='container-center' style='display: none;'>
+        <div class='name'><input id='profile-nickname' type='text' class='name-input' placeholder='Nickname'/></div>
+        <div class='team'><input id='profile-team' type='text' class='team-input' maxlength="3" placeholder='Squad Code'/></div>
+        <div class="skin-select">
+            <div id='profile-skin-select' class="skin-select-inner">
+            </div>
+        </div>
+        <div class='container-bottom'>
+          <div class='container-go'>
+            <span id ='profile-save' class='launch'>Save</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guest mode -->
+      <div id='name' class='container-center' style='display: none;'>
         <div class='name'><input id='name-input' type='text' class='name-input' placeholder='Name'/></div>
         <div class='team'><input id='team-input' type='text' class='team-input' maxlength="3" placeholder='Squad Code'/></div>
         <div class='container-bottom'>
@@ -127,8 +163,35 @@
             <span id ='name-launch' class='launch'>Go!</span>
           </div>
         </div>
-        <div id='skin-select' class="skin-select">
+        <div class="skin-select">
+            <div id='skin-select' class="skin-select-inner">
+            </div>
         </div>
+      </div>
+
+      <!-- Login -->
+      <div id='login' class='container-center' style='display: none;'>
+        <form action="#login">
+            <div class='name'><input id='login-username-input' type='text' class='name-input' placeholder='UserName'/></div>
+            <div class='name'><input id='login-password-input' type='password' class='name-input' placeholder='Password'/></div>
+            <div class='container-bottom'>
+                <input id ='login-do' type="submit" class='launchStrong' value="Login"></input>
+            </div>
+            <div id="loginResult" class="levelSelectRow">&nbsp;</div>
+        </form>
+      </div>
+
+      <!-- Register -->
+      <div id='register' class='container-center' style='display: none;'>
+        <form action="#register">
+            <div class='name'><input id='register-username-input' type='text' class='name-input' placeholder='UserName'/></div>
+            <div class='name'><input id='register-password-input' type='password' class='name-input' placeholder='Password'/></div>
+            <div class='name'><input id='register-password2-input' type='password' class='name-input' placeholder='Password again'/></div>
+            <div class='container-bottom'>
+                <input id ='register-do' type="submit" class='launchStrong' value="Register"></input>
+            </div>
+            <div id="registerResult" class="levelSelectRow">&nbsp;</div>
+        </form>
       </div>
 
       <!-- Game -->
