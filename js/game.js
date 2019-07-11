@@ -1115,6 +1115,10 @@ MainScreen.prototype.show = function() {
     this.startPad();
     this.linkElement.style.display = "block";
     this.element.style.display = "block";
+    session = Cookies.get("session");
+    if (session != undefined) {
+        gameClient.resumeSession(session);
+    }
 };
 MainScreen.prototype.hide = function() {
     this.padLoop && clearTimeout(this.padLoop);
@@ -1149,12 +1153,20 @@ function MainAsMemberScreen() {
 MainAsMemberScreen.prototype.show = function(data) {
     gameClient.menu.hideAll();
     gameClient.menu.background('a');
+    if (data.session != undefined) {
+        Cookies.set("session", data.session, {
+            'expires': 0x1e
+        });
+    }
     var savedPriv = Cookies.get("priv");
     this.nickname = data.nickname;
     this.squad = data.squad;
     this.skin = data.skin;
     this.isPrivate = savedPriv ? (savedPriv == "true") : false;
     this.element.style.display = "block";
+    if (gameClient.goToLobby) {
+        this.launch();
+    }
 };
 MainAsMemberScreen.prototype.hide = function() {
     this.element.style.display = "none";
@@ -1169,6 +1181,9 @@ MainAsMemberScreen.prototype.launch = function() {
 
 MainAsMemberScreen.prototype.showProfile = function() {
     gameClient.menu.profile.show({"nickname": this.nickname, "squad": this.squad, "skin": this.skin});
+};
+MainAsMemberScreen.prototype.logout = function() {
+    gameClient.logout();
 };
 MainAsMemberScreen.prototype.updPrivateBtn = function() {
     this.privateBtn.innerText = "["+(this.isPrivate?'X':' ')+']Private Room';
@@ -1445,11 +1460,11 @@ RegisterScreen.prototype.launch = function() {
     var userName = this.userNameInput.value;
     var pw = this.passwordInput.value;
     var pw2 = this.passwordInput2.value;
-    if (userName.length < 3) {
+    if (userName.length < 5) {
         this.reportError("Username is too short");
         return;
     }
-    if (pw.length < 3) {
+    if (pw.length < 8) {
         this.reportError("Password is too short");
         return;
     }
@@ -1485,6 +1500,7 @@ Net.CONNECTTYPE = {};
 Net.CONNECTTYPE.GUEST = 0;
 Net.CONNECTTYPE.LOGIN = 1;
 Net.CONNECTTYPE.REGISTER = 2;
+Net.CONNECTTYPE.RESUME = 3;
 Net.prototype.connected = function() {
     return void 0x0 !== this.webSocket && this.webSocket.readyState !== WebSocket.CLOSED;
 };
@@ -1557,6 +1573,13 @@ Net.prototype.connect = function(args) {
             'username': this.username,
             'password': this.pw
         });
+    } else if (connectType == Net.CONNECTTYPE.RESUME) {
+        var session = args[1];
+        this.session = session;
+        this.send({
+            'type': "lrs",
+            'session': this.session,
+        });
     } else {
         console.error("args = " + args);
         gameClient.menu.error.show("Assert failed in Net.connect");
@@ -1626,6 +1649,10 @@ LobbyState.prototype.handlePacket = function(data) {
             return this.handleLoginResult(data), !0x0;
         case "lrg":
             return this.handleRegisterResult(data), !0x0;
+        case "lrs":
+            return this.handleLoginResult(data), !0x0;
+        case "llo":
+            return this.handleLogoutResult(data), !0x0;
         default:
             return !0x1;
     }
@@ -1638,13 +1665,18 @@ LobbyState.prototype.ready = function() {
 };
 LobbyState.prototype.loggedIn = function(data) {
     gameClient.net.name = data.name;
-    gameClient.net.sid = data.sid;
-    console.log("Logged in: " + data.name + " :: " + data.team + " // " + data.sid);
+    console.log("Logged in: " + data.name + " :: " + data.team);
+};
+LobbyState.prototype.handleLogoutResult = function(data) {
+    Cookies.remove("session");
+    Cookies.remove("go_to_lobby");
+    location.reload();
 };
 LobbyState.prototype.handleLoginResult = function(data) {
     if (data.status) {
         gameClient.menu.mainAsMember.show(data.msg);
     } else {
+        Cookies.remove("session");
         gameClient.menu.login.show();
         gameClient.menu.login.reportError(data.msg);
     }
@@ -7039,6 +7071,7 @@ function GameClient() {
     this.goToLobby = Cookies.get("go_to_lobby") === "1";
     if (this.goToLobby)
         Cookies.remove("go_to_lobby");
+    this.session = Cookies.get("session");
     this.audioElement = document.createElement('audio');
     this.audioElement.setAttribute('src', MENU_MUSIC_URL);
     this.audioElement.load;
@@ -7057,7 +7090,7 @@ GameClient.prototype.init = function() {
     setTimeout(function() {
         that.menu.load.show();
 
-        if (gameClient.goToLobby) {
+        if (gameClient.goToLobby && gameClientLocal.session == undefined) {
             var name = Cookies.get("name");
             var team = Cookies.get("team");
             var priv = Cookies.get("priv");
@@ -7120,9 +7153,17 @@ GameClient.prototype.login = function(username, pw) {
     this.stopMainScreenUpdates();
     this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.LOGIN, username, pw]);
 };
+GameClient.prototype.logout = function(username, pw) {
+    this.net.send({'type': "llo"});
+};
 GameClient.prototype.register = function(username, pw) {
     this.stopMainScreenUpdates();
     this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.REGISTER, username, pw]);
+};
+GameClient.prototype.resumeSession = function(session) {
+    if (gameClient.audioElement !== undefined)
+        gameClient.audioElement.pause();
+    this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.RESUME, session]);
 };
 GameClient.prototype.close = function() {
     this.menu.load.show();
