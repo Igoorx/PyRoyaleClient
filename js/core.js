@@ -11,7 +11,7 @@ var VERSION = (function() {
     return myScript.src.split("?v=").slice(-1)[0];
 })();
 
-var scripts = ["js/server.js", "js/url.js", "js/game.min.js"]
+var scripts = ["js/server.js", "js/url.js", "js/game.js"]
 
 function loadNext() {
     if (scripts.length == 0) return;

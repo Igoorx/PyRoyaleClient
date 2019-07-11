@@ -1,27 +1,38 @@
-.p {
-  font-family: Calibri, sans-serif;
+@font-face {
+    font-family: Mario;
+    src: url('../font/smbfont.ttf') format("truetype");
+}
+
+body {
+	font-family: Mario;
+	font-size: 10px;
+	color: #fff;
+	line-height: 1.4;
+	background-color: #6b8cff;
+	
+}
+
+p {
   margin-left: 8px;
 }
 
-.ver {
-  font-weight: bold;
-  font-size: 24px;
-  margin-bottom: 8px;
+a {
+  color: #fff;
 }
 
-.chng {
-  font-size: 16px;
+h1 {
+  margin-bottom: 8px;
 }
 
 .note {
-  font-size: 12px;
   font-style: italic;
   margin-bottom: 8px;
-  background-color: #BBBBBB;
+  background-color: #0066AF;
+  width: fit-content;
 }
 
-.splt {
+hr {
   margin-top: 8px;
   margin-bottom: 8px;
-  border-bottom: dashed 2px black;
+  border: dashed 2px black;
 }

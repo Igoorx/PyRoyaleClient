@@ -894,7 +894,7 @@ _0x1badb6.inside = function(_0x15c2a5, _0x1957cd, _0x4042e7) {
 "use strict";
 
 function Menu() {
-    this.body = document.getElementsByTagName("BODY")[0]; 
+    this.body = document.getElementById("body");
     window.history.pushState({
         'html': "index.html",
         'pageTitle': "Mario Royale"
@@ -1067,12 +1067,11 @@ _0x47a659.prototype.startPad = function() {
         };
     _0x4736e8();
 };
-_0x47a659.prototype.show = function(_0x2c3db0) {
+_0x47a659.prototype.show = function() {
     gameClient.menu.hideAll();
     gameClient.menu.navigation("main", "main");
     gameClient.menu.background('a');
-    _0x2c3db0 && (this.number.innerHTML = _0x2c3db0);
-    _0x2c3db0 = Cookies.get("epic_gamer_moments");
+    var _0x2c3db0 = Cookies.get("epic_gamer_moments");
     var deaths = Cookies.get("sad_gamer_moments"),
         _0x2d00b0 = Cookies.get("heated_gamer_moments"),
         _0x3d5556 = Cookies.get("dosh");
@@ -6749,32 +6748,34 @@ GameClient.prototype.init = function() {
         this.menu.disclaim.show();
     setTimeout(function() {
         gameClientLocal.menu.load.show();
-        $.ajax({
-            'url': "status",
-            'type': "GET",
-            'timeout': 0xbb8,
-            'success': function(_0x497cbd) {
-                if (_0x497cbd.result) {
-                    gameClientLocal.menu.error.show(_0x497cbd.result);
-                    
-                } else {
-                    if (gameClient.goToLobby) {
-                        var name = Cookies.get("name");
-                        var team = Cookies.get("team");
-                        var priv = Cookies.get("priv");
-                        var skin = Cookies.get("skin");
-                        gameClient.join(name ? name : "", team ? team : "", priv === "true", skin ? parseInt(skin) : 0);
-                        return;
+        
+        setInterval(function() {
+            if (gameClient.ingame()) return;
+            $.ajax({
+                'url': "status",
+                'type': "GET",
+                'timeout': 0xbb8,
+                'success': function(_0x497cbd) {
+                    if (_0x497cbd.result) {
+                        gameClientLocal.menu.error.show(_0x497cbd.result);
+                    } else {
+                        gameClientLocal.menu.main.number.innerHTML = _0x497cbd.active;
                     }
-                    
-                    gameClientLocal.menu.main.show(_0x497cbd.active);
-                }
-            },
-            'error': function() {
-                gameClientLocal.menu.error.show("An unknown error occured while connecting to the game server...");
-            },
-            cache: false
-        });
+                },
+                cache: false
+            });
+        }, 1000);
+
+        if (gameClient.goToLobby) {
+            var name = Cookies.get("name");
+            var team = Cookies.get("team");
+            var priv = Cookies.get("priv");
+            var skin = Cookies.get("skin");
+            gameClient.join(name ? name : "", team ? team : "", priv === "true", skin ? parseInt(skin) : 0);
+            return;
+        }
+
+        gameClientLocal.menu.main.show();
     }, this.goToLobby ? 100 : 5000);
 };
 GameClient.prototype.load = function(data) {
