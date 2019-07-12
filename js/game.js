@@ -6529,7 +6529,7 @@ MainGame.prototype.getZone = function() {
 };
 MainGame.prototype.getPlayerInfo = function(_0x45814e) {
     for (var i = 0; i < this.players.length; i++) {
-        var obj = this.objects[i];
+        var obj = this.players[i];
         if (obj.id === _0x45814e) return obj;
     }
 };
