@@ -6481,22 +6481,38 @@ MainGame.prototype.createObject = function(id, level, zoneId, pos, extraArgs) {
     return object;
 };
 MainGame.prototype.getObject = function(level, zone, oid) {
-    for (var obj of this.objects) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (void 0x0 !== obj.oid && obj.level === level && obj.zone === zone && obj.oid === oid) return obj;
     }
 };
 MainGame.prototype.getFlag = function(level, zone) {
-    for (var obj of this.objects) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (obj.level === level && obj.zone === zone && obj instanceof FlagpoleObject) return obj;
     }
 };
 MainGame.prototype.getAxe = function(level, zone) {
-    for (var obj of this.objects) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (obj.level === level && obj.zone === zone && obj instanceof AxeObject) return obj;
     }
 };
 MainGame.prototype.getText = function(_0x684bab, _0x1988a8, _0x26b734) {
-    for (var obj of this.objects) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (obj && obj.level === _0x684bab && obj.zone === _0x1988a8 && obj instanceof _0x3db18a && obj.text === _0x26b734.toString()) return obj;
     }
 };
@@ -6508,12 +6524,20 @@ MainGame.prototype.getPlatforms = function() {
     return _0x4bb33b;
 };
 MainGame.prototype.getGhost = function(_0x449d8f) {
-    for (var obj of this.objects) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (void 0x0 !== obj.pid && obj.pid === _0x449d8f) return obj;
     }
 };
 MainGame.prototype.getPlayer = function() {
-    for (var obj of this.objects) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (void 0x0 !== obj.pid && obj.pid === this.pid) return obj;
     }
 };
@@ -6522,7 +6546,11 @@ MainGame.prototype.getZone = function() {
     return _0x215d79 ? this.lastZone = this.world.getZone(_0x215d79.level, _0x215d79.zone) : this.lastZone ? this.lastZone : this.world.getInitialZone();
 };
 MainGame.prototype.getPlayerInfo = function(_0x45814e) {
-    for (var obj of this.players) {
+    let objs = this.objects.length;
+    let obj;
+
+    for (var i = 0; i < objs; i++) {
+        obj = this.objects[i];
         if (obj.id === _0x45814e) return obj;
     }
 };
