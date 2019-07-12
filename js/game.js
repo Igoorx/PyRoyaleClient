@@ -2129,7 +2129,7 @@ PlayerObject.prototype.invuln = function() {
     this.damageTimer = PlayerObject.DAMAGE_TIME;
 };
 PlayerObject.prototype.powerup = function(_0x316532) {
-    _0x316532 instanceof MushroomObject && 0x1 > this.power ? (this.tfm(0x1), this.rate = 0x73) : _0x316532 instanceof FlowerObject && 0x2 > this.power ? (this.tfm(0x2), this.rate = 0x71) : _0x316532 instanceof StarObject ? (this.star(), this.game.out.push(_0x2ca693.encode(0x2)), this.rate = 0x43) : _0x316532 instanceof LifeObject ? this.game.lifeage() : _0x316532 instanceof CoinObject ? this.game.coinage() : _0x316532 instanceof GoldFlowerObject ? this.game.coinage(true) : _0x316532 instanceof AxeObject ? this.game.out.push(_0x2656cf.encode()) : _0x316532 instanceof _0x5010c8 && this.damage(_0x316532);
+    _0x316532 instanceof MushroomObject && 0x1 > this.power ? (this.tfm(0x1), this.rate = 0x73) : _0x316532 instanceof FlowerObject && 0x2 > this.power ? (this.tfm(0x2), this.rate = 0x71) : _0x316532 instanceof StarObject ? (this.star(), this.game.out.push(_0x2ca693.encode(0x2)), this.rate = 0x43) : _0x316532 instanceof LifeObject ? this.game.lifeage() : _0x316532 instanceof CoinObject ? this.game.coinage() : _0x316532 instanceof GoldFlowerObject ? this.game.coinage(true) : _0x316532 instanceof AxeObject ? (this.game.stopGameTimer(),this.game.out.push(_0x2656cf.encode())) : _0x316532 instanceof _0x5010c8 && this.damage(_0x316532);
 };
 PlayerObject.prototype.axe = function(_0x5050d5) {
     (_0x5050d5 = this.game.getText(this.level, this.zone, _0x5050d5.toString())) || (_0x5050d5 = this.game.getText(this.level, this.zone, "too bad"));
@@ -2167,6 +2167,7 @@ PlayerObject.prototype.weedeat = function() {
 };
 PlayerObject.prototype.pole = function(_0x4a8021) {
     if (this.autoTarget) return;
+    this.game.stopGameTimer();
     this.starMusic && (this.starMusic.stop(), this.starMusic = void 0x0, this.starTimer = 0x0);
     this.setState(PlayerObject.SNAME.POLE);
     this.fallSpeed = this.moveSpeed = 0x0;
@@ -2194,6 +2195,7 @@ PlayerObject.prototype.kill = function() {
     this.deadFreezeTimer = PlayerObject.DEAD_FREEZE_TIME;
     this.fallSpeed = PlayerObject.DEAD_UP_FORCE;
     if (this.game.getPlayer() === this) {
+        this.game.stopGameTimer();
         this.game.out.push(_0x4c5df7.encode());
         var _0x27d445 = Cookies.get("sad_gamer_moments");
         !gameClient.net.isPrivate && Cookies.set("sad_gamer_moments", _0x27d445 ? parseInt(_0x27d445) + 0x1 : 0x1, {
@@ -5808,10 +5810,11 @@ Display.prototype.drawUI = function() {
         context.fillStyle = "white",
         context.font = "24px SmbWeb",
         context.textAlign = "center",
-        context.fillText("MATCH STATS:", 0.8 * canvasWidth, 0.3 * canvasHeight),
+        context.fillText(this.game.world.getLevel(this.game.getPlayer().level).name + " MATCH STATS:", 0.8 * canvasWidth, 0.3 * canvasHeight),
         context.font = "16px SmbWeb",
-        context.fillText(this.game.playersKilled + " PLAYERS KILLED", 0.8 * canvasWidth, 0.3 * canvasHeight + 24),
-        context.fillText(this.game.coinsCollected + " COINS COLLECTED", 0.8 * canvasWidth, 0.3 * canvasHeight + 28 + 16))
+        context.fillText(this.game.getGameTimer() + " ELAPSED TIME", 0.8 * canvasWidth, 0.3 * canvasHeight + 24),
+        context.fillText(this.game.playersKilled + " PLAYERS KILLED", 0.8 * canvasWidth, 0.3 * canvasHeight + 28 + 16),
+        context.fillText(this.game.coinsCollected + " COINS COLLECTED", 0.8 * canvasWidth, 0.3 * canvasHeight + 32 + 16 + 16))
     : (0x3 < this.game.victory ? (
         context.fillStyle = "white",
         context.font = "32px SmbWeb",
@@ -5830,6 +5833,9 @@ Display.prototype.drawUI = function() {
         context.drawImage(skinTexture, sprite[0x0], sprite[0x1], Display.TEXRES, Display.TEXRES, 0x4 + txtWidth + 0x10, 0x28, 0x18, 0x18),
         context.fillText('x' + (0x9 >= this.game.lives ? '0' + this.game.lives : this.game.lives), 0x4 + txtWidth + 0x10 + 0x1a, 0x40),
         this.game instanceof MainGame ? (
+            txt = this.game.getGameTimer(),
+            txtWidth = context.measureText(txt).width,
+            context.fillText(txt, (canvasWidth / 2) - (txtWidth / 2), 0x20),
             txt = this.game.remain + " PLAYERS REMAIN",
             txtWidth = context.measureText(txt).width,
             context.fillText(txt, canvasWidth - txtWidth - 0x8, 0x20))
@@ -6092,6 +6098,9 @@ function MainGame(data) {
     this.padReturnToLobby = false;
     this.playersKilled = 0;
     this.coinsCollected = 0;
+    this.gameTimerStopped = null;
+    this.gameTimerStopTime = 0;
+    this.poleTimes = 0;
     var game = this;
     this.frameReq = _0x5a9d86.call(window, function() {
         game.draw();
@@ -6133,6 +6142,30 @@ MainGame.prototype.updatePlayerList = function(_0x407394) {
     this.players = _0x407394.players;
     void 0x0 !== this.pid && this.updateTeam();
 };
+MainGame.prototype.getGameTimer = function() {
+    if (this.gameTimerStopped !== null) return this.gameTimerStopped;
+    if (this.startDelta === undefined) return "00:00:000";
+    var now = Utils.time.now() - this.poleTimes; // get the time now minus the poleTimes
+    var diff = now - this.startDelta; // diff in seconds between now and start
+    var m = Math.floor(diff / 60000); // get minutes value
+    var s = Math.floor(diff / 1000) % 60; // get seconds value
+	var ms = diff % 1000; // get milliseconds value
+    if (m < 10) m = "0" + m; // add a leading zero if it's single digit
+    if (s < 10) s = "0" + s; // add a leading zero if it's single digit
+    if (ms < 10) ms = "00" + ms; // add two leadings zeros if it's single digit
+    else if (ms < 100) ms = "0" + ms; // add a leading zero if it's double digit
+    return m + ":" + s + ":" + ms;
+}
+MainGame.prototype.resumeGameTimer = function() {
+    if (this.gameTimerStopped === null) return;
+    this.gameTimerStopped = null;
+    this.poleTimes += Utils.time.now() - this.gameTimerStopTime;
+}
+MainGame.prototype.stopGameTimer = function() {
+    if (this.gameTimerStopped !== null) return;
+    this.gameTimerStopped = this.getGameTimer();
+    this.gameTimerStopTime = Utils.time.now();
+}
 MainGame.prototype.gameStartTimer = function(_0x1effd6) {
     0x0 > this.startTimer && this.play("sfx/alert.wav", 0x1, 0x0);
     0x0 < _0x1effd6.time ? (this.startTimer = _0x1effd6.time, this.remain = this.players.length) : this.doStart();
@@ -6431,6 +6464,7 @@ MainGame.prototype.doStep = function() {
         _0x504fb1.show();
         _0x504fb1.invuln();
         this.levelWarpId = void 0x0;
+        this.resumeGameTimer();
     }
     _0x504fb1 && this.cullSS && !Vector2D.equals(_0x504fb1.pos, this.cullSS) && this.out.push(_0x4152f4.encode());
     _0x504fb1 && this.fillSS && this.fillSS !== _0x504fb1.fallSpeed && this.out.push(_0x4152f4.encode());
