@@ -6528,7 +6528,7 @@ MainGame.prototype.getZone = function() {
     return _0x215d79 ? this.lastZone = this.world.getZone(_0x215d79.level, _0x215d79.zone) : this.lastZone ? this.lastZone : this.world.getInitialZone();
 };
 MainGame.prototype.getPlayerInfo = function(_0x45814e) {
-    for (var i = 0; i < this.objects.length; i++) {
+    for (var i = 0; i < this.players.length; i++) {
         var obj = this.objects[i];
         if (obj.id === _0x45814e) return obj;
     }
