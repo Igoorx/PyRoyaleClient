@@ -894,7 +894,7 @@ _0x1badb6.inside = function(_0x15c2a5, _0x1957cd, _0x4042e7) {
 "use strict";
 
 function Menu() {
-    this.body = document.getElementById("body");
+    this.body = document.getElementsByTagName("BODY")[0];
     window.history.pushState({
         'html': "index.html",
         'pageTitle': "Mario Royale"
@@ -2129,11 +2129,12 @@ PlayerObject.prototype.invuln = function() {
     this.damageTimer = PlayerObject.DAMAGE_TIME;
 };
 PlayerObject.prototype.powerup = function(_0x316532) {
-    _0x316532 instanceof MushroomObject && 0x1 > this.power ? (this.tfm(0x1), this.rate = 0x73) : _0x316532 instanceof FlowerObject && 0x2 > this.power ? (this.tfm(0x2), this.rate = 0x71) : _0x316532 instanceof StarObject ? (this.star(), this.game.out.push(_0x2ca693.encode(0x2)), this.rate = 0x43) : _0x316532 instanceof LifeObject ? this.game.lifeage() : _0x316532 instanceof CoinObject ? this.game.coinage() : _0x316532 instanceof GoldFlowerObject ? this.game.coinage(true) : _0x316532 instanceof _0x2aba82 ? this.game.out.push(_0x2656cf.encode()) : _0x316532 instanceof _0x5010c8 && this.damage(_0x316532);
+    _0x316532 instanceof MushroomObject && 0x1 > this.power ? (this.tfm(0x1), this.rate = 0x73) : _0x316532 instanceof FlowerObject && 0x2 > this.power ? (this.tfm(0x2), this.rate = 0x71) : _0x316532 instanceof StarObject ? (this.star(), this.game.out.push(_0x2ca693.encode(0x2)), this.rate = 0x43) : _0x316532 instanceof LifeObject ? this.game.lifeage() : _0x316532 instanceof CoinObject ? this.game.coinage() : _0x316532 instanceof GoldFlowerObject ? this.game.coinage(true) : _0x316532 instanceof AxeObject ? this.game.out.push(_0x2656cf.encode()) : _0x316532 instanceof _0x5010c8 && this.damage(_0x316532);
 };
 PlayerObject.prototype.axe = function(_0x5050d5) {
     (_0x5050d5 = this.game.getText(this.level, this.zone, _0x5050d5.toString())) || (_0x5050d5 = this.game.getText(this.level, this.zone, "too bad"));
-    _0x5050d5 && (this.moveSpeed = 0, this.autoTarget = Vector2D.add(_0x5050d5.pos, Vector2D.make(0x0, -1.6)));
+    var axe = this.game.getAxe(this.level, this.zone);
+    _0x5050d5 && (this.moveSpeed = 0, this.pos = Vector2D.make(axe.pos.x, axe.pos.y), this.autoTarget = Vector2D.add(_0x5050d5.pos, Vector2D.make(0x0, -1.6)));
 };
 PlayerObject.prototype.star = function() {
     this.starMusic && (this.starMusic.stop(), this.starMusic = void 0x0);
@@ -3729,51 +3730,51 @@ SpringObject.prototype.draw = function(_0x132bc0) {
 GameObject.REGISTER_OBJECT(SpringObject);
 "use strict";
 
-function _0xadcd81(_0x5642ff, _0x3d3a00, _0x34f17d, _0x57e7a3, _0x93cf94) {
+function FlagpoleObject(_0x5642ff, _0x3d3a00, _0x34f17d, _0x57e7a3, _0x93cf94) {
     GameObject.call(this, _0x5642ff, _0x3d3a00, _0x34f17d, _0x57e7a3);
     this.oid = _0x93cf94;
-    this.setState(_0xadcd81.STATE.IDLE);
+    this.setState(FlagpoleObject.STATE.IDLE);
     this.anim = 0x0;
 }
-_0xadcd81.ASYNC = !0x0;
-_0xadcd81.ID = 0xb1;
-_0xadcd81.NAME = "FLAG";
-_0xadcd81.ANIMATION_RATE = 0x3;
-_0xadcd81.OFFSET = Vector2D.make(-0.5, 0x0);
-_0xadcd81.SPRITE = {};
-_0xadcd81.SPRITE_LIST = [{
+FlagpoleObject.ASYNC = !0x0;
+FlagpoleObject.ID = 0xb1;
+FlagpoleObject.NAME = "FLAG";
+FlagpoleObject.ANIMATION_RATE = 0x3;
+FlagpoleObject.OFFSET = Vector2D.make(-0.5, 0x0);
+FlagpoleObject.SPRITE = {};
+FlagpoleObject.SPRITE_LIST = [{
     'NAME': "IDLE",
     'ID': 0x0,
     'INDEX': 0x90
 }];
-for (_0x1bec55 = 0x0; _0x1bec55 < _0xadcd81.SPRITE_LIST.length; _0x1bec55++) _0xadcd81.SPRITE[_0xadcd81.SPRITE_LIST[_0x1bec55].NAME] = _0xadcd81.SPRITE_LIST[_0x1bec55], _0xadcd81.SPRITE[_0xadcd81.SPRITE_LIST[_0x1bec55].ID] = _0xadcd81.SPRITE_LIST[_0x1bec55];
-_0xadcd81.STATE = {};
-_0xadcd81.STATE_LIST = [{
+for (_0x1bec55 = 0x0; _0x1bec55 < FlagpoleObject.SPRITE_LIST.length; _0x1bec55++) FlagpoleObject.SPRITE[FlagpoleObject.SPRITE_LIST[_0x1bec55].NAME] = FlagpoleObject.SPRITE_LIST[_0x1bec55], FlagpoleObject.SPRITE[FlagpoleObject.SPRITE_LIST[_0x1bec55].ID] = FlagpoleObject.SPRITE_LIST[_0x1bec55];
+FlagpoleObject.STATE = {};
+FlagpoleObject.STATE_LIST = [{
     'NAME': "IDLE",
     'ID': 0x0,
-    'SPRITE': [_0xadcd81.SPRITE.IDLE]
+    'SPRITE': [FlagpoleObject.SPRITE.IDLE]
 }];
-for (_0x1bec55 = 0x0; _0x1bec55 < _0xadcd81.STATE_LIST.length; _0x1bec55++) _0xadcd81.STATE[_0xadcd81.STATE_LIST[_0x1bec55].NAME] = _0xadcd81.STATE_LIST[_0x1bec55], _0xadcd81.STATE[_0xadcd81.STATE_LIST[_0x1bec55].ID] = _0xadcd81.STATE_LIST[_0x1bec55];
-_0xadcd81.prototype.update = function(_0x261833) {};
-_0xadcd81.prototype.step = function() {
+for (_0x1bec55 = 0x0; _0x1bec55 < FlagpoleObject.STATE_LIST.length; _0x1bec55++) FlagpoleObject.STATE[FlagpoleObject.STATE_LIST[_0x1bec55].NAME] = FlagpoleObject.STATE_LIST[_0x1bec55], FlagpoleObject.STATE[FlagpoleObject.STATE_LIST[_0x1bec55].ID] = FlagpoleObject.STATE_LIST[_0x1bec55];
+FlagpoleObject.prototype.update = function(_0x261833) {};
+FlagpoleObject.prototype.step = function() {
     this.anim++;
-    this.sprite = this.state.SPRITE[parseInt(this.anim / _0xadcd81.ANIMATION_RATE) % this.state.SPRITE.length];
+    this.sprite = this.state.SPRITE[parseInt(this.anim / FlagpoleObject.ANIMATION_RATE) % this.state.SPRITE.length];
 };
-_0xadcd81.prototype.kill = function() {};
-_0xadcd81.prototype.isTangible = GameObject.prototype.isTangible;
-_0xadcd81.prototype.destroy = GameObject.prototype.destroy;
-_0xadcd81.prototype.setState = function(_0x2d7e00) {
+FlagpoleObject.prototype.kill = function() {};
+FlagpoleObject.prototype.isTangible = GameObject.prototype.isTangible;
+FlagpoleObject.prototype.destroy = GameObject.prototype.destroy;
+FlagpoleObject.prototype.setState = function(_0x2d7e00) {
     _0x2d7e00 !== this.state && (this.state = _0x2d7e00, this.sprite = _0x2d7e00.SPRITE[0x0], this.anim = 0x0);
 };
-_0xadcd81.prototype.draw = function(_0x33d2c9) {
+FlagpoleObject.prototype.draw = function(_0x33d2c9) {
     _0x33d2c9.push({
-        'pos': Vector2D.add(this.pos, _0xadcd81.OFFSET),
+        'pos': Vector2D.add(this.pos, FlagpoleObject.OFFSET),
         'reverse': !0x1,
         'index': this.sprite.INDEX,
         'mode': 0x0
     });
 };
-GameObject.REGISTER_OBJECT(_0xadcd81);
+GameObject.REGISTER_OBJECT(FlagpoleObject);
 "use strict";
 
 function _0x35ddf4(_0x5067e9, _0x471c11, _0x4c3d45, _0x5b45aa, _0x5f9e08, _0x62b44d, _0x119674) {
@@ -4726,18 +4727,18 @@ LifeObject.prototype.draw = _0x2e2bc3.prototype.draw;
 GameObject.REGISTER_OBJECT(LifeObject);
 "use strict";
 
-function _0x2aba82(_0x2e51a9, _0x26a37d, _0x357dfc, _0x5ac831, _0x5aad3e) {
+function AxeObject(_0x2e51a9, _0x26a37d, _0x357dfc, _0x5ac831, _0x5aad3e) {
     _0x2e2bc3.call(this, _0x2e51a9, _0x26a37d, _0x357dfc, _0x5ac831, _0x5aad3e);
-    this.state = _0x2aba82.STATE.IDLE;
+    this.state = AxeObject.STATE.IDLE;
     this.sprite = this.state.SPRITE[0x0];
     this.used = !0x1;
     this.dim = Vector2D.make(0x1, 0x3);
 }
-_0x2aba82.ASYNC = !0x0;
-_0x2aba82.ID = 0x55;
-_0x2aba82.NAME = "AXE";
-_0x2aba82.SPRITE = {};
-_0x2aba82.SPRITE_LIST = [{
+AxeObject.ASYNC = !0x0;
+AxeObject.ID = 0x55;
+AxeObject.NAME = "AXE";
+AxeObject.SPRITE = {};
+AxeObject.SPRITE_LIST = [{
     'NAME': "IDLE0",
     'ID': 0x0,
     'INDEX': 0xec
@@ -4754,19 +4755,19 @@ _0x2aba82.SPRITE_LIST = [{
     'ID': 0x3,
     'INDEX': 0xef
 }];
-for (_0x1bec55 = 0x0; _0x1bec55 < _0x2aba82.SPRITE_LIST.length; _0x1bec55++) _0x2aba82.SPRITE[_0x2aba82.SPRITE_LIST[_0x1bec55].NAME] = _0x2aba82.SPRITE_LIST[_0x1bec55], _0x2aba82.SPRITE[_0x2aba82.SPRITE_LIST[_0x1bec55].ID] = _0x2aba82.SPRITE_LIST[_0x1bec55];
-_0x2aba82.STATE = {};
-_0x2aba82.STATE_LIST = [{
+for (_0x1bec55 = 0x0; _0x1bec55 < AxeObject.SPRITE_LIST.length; _0x1bec55++) AxeObject.SPRITE[AxeObject.SPRITE_LIST[_0x1bec55].NAME] = AxeObject.SPRITE_LIST[_0x1bec55], AxeObject.SPRITE[AxeObject.SPRITE_LIST[_0x1bec55].ID] = AxeObject.SPRITE_LIST[_0x1bec55];
+AxeObject.STATE = {};
+AxeObject.STATE_LIST = [{
     'NAME': "IDLE",
     'ID': 0x0,
-    'SPRITE': [_0x2aba82.SPRITE.IDLE0, _0x2aba82.SPRITE.IDLE1, _0x2aba82.SPRITE.IDLE2, _0x2aba82.SPRITE.IDLE3]
+    'SPRITE': [AxeObject.SPRITE.IDLE0, AxeObject.SPRITE.IDLE1, AxeObject.SPRITE.IDLE2, AxeObject.SPRITE.IDLE3]
 }];
-for (_0x1bec55 = 0x0; _0x1bec55 < _0x2aba82.STATE_LIST.length; _0x1bec55++) _0x2aba82.STATE[_0x2aba82.STATE_LIST[_0x1bec55].NAME] = _0x2aba82.STATE_LIST[_0x1bec55], _0x2aba82.STATE[_0x2aba82.STATE_LIST[_0x1bec55].ID] = _0x2aba82.STATE_LIST[_0x1bec55];
-_0x2aba82.prototype.update = function(_0x13d820) {};
-_0x2aba82.prototype.step = _0x2e2bc3.prototype.step;
-_0x2aba82.prototype.control = function() {};
-_0x2aba82.prototype.physics = _0x2e2bc3.prototype.physics;
-_0x2aba82.prototype.playerCollide = function(_0x250479) {
+for (_0x1bec55 = 0x0; _0x1bec55 < AxeObject.STATE_LIST.length; _0x1bec55++) AxeObject.STATE[AxeObject.STATE_LIST[_0x1bec55].NAME] = AxeObject.STATE_LIST[_0x1bec55], AxeObject.STATE[AxeObject.STATE_LIST[_0x1bec55].ID] = AxeObject.STATE_LIST[_0x1bec55];
+AxeObject.prototype.update = function(_0x13d820) {};
+AxeObject.prototype.step = _0x2e2bc3.prototype.step;
+AxeObject.prototype.control = function() {};
+AxeObject.prototype.physics = _0x2e2bc3.prototype.physics;
+AxeObject.prototype.playerCollide = function(_0x250479) {
     if (!(this.dead || this.garbage || this.used))
         for (_0x250479.powerup(this), this.used = !0x0, _0x250479 = 0x0; _0x250479 < this.game.objects.length; _0x250479++) {
             var _0x2ea61e = this.game.objects[_0x250479];
@@ -4776,14 +4777,14 @@ _0x2aba82.prototype.playerCollide = function(_0x250479) {
             }
         }
 };
-_0x2aba82.prototype.playerStomp = _0x2e2bc3.prototype.playerStomp;
-_0x2aba82.prototype.playerBump = _0x2e2bc3.prototype.playerBump;
-_0x2aba82.prototype.kill = _0x2e2bc3.prototype.kill;
-_0x2aba82.prototype.isTangible = GameObject.prototype.isTangible;
-_0x2aba82.prototype.destroy = GameObject.prototype.destroy;
-_0x2aba82.prototype.setState = _0x2e2bc3.prototype.setState;
-_0x2aba82.prototype.draw = _0x2e2bc3.prototype.draw;
-GameObject.REGISTER_OBJECT(_0x2aba82);
+AxeObject.prototype.playerStomp = _0x2e2bc3.prototype.playerStomp;
+AxeObject.prototype.playerBump = _0x2e2bc3.prototype.playerBump;
+AxeObject.prototype.kill = _0x2e2bc3.prototype.kill;
+AxeObject.prototype.isTangible = GameObject.prototype.isTangible;
+AxeObject.prototype.destroy = GameObject.prototype.destroy;
+AxeObject.prototype.setState = _0x2e2bc3.prototype.setState;
+AxeObject.prototype.draw = _0x2e2bc3.prototype.draw;
+GameObject.REGISTER_OBJECT(AxeObject);
 "use strict";
 
 function _0x5010c8(_0x3b57db, _0x117631, _0x59afa6, _0x252b6f, _0x50c0b4) {
@@ -6479,16 +6480,22 @@ MainGame.prototype.createObject = function(id, level, zoneId, pos, extraArgs) {
     this.objects.push(object);
     return object;
 };
-MainGame.prototype.getObject = function(_0x3a86a9, _0x3ba0b6, _0x5b861b) {
-    for (var _0x3ffb90 = 0x0; _0x3ffb90 < this.objects.length; _0x3ffb90++) {
-        var _0x27bd94 = this.objects[_0x3ffb90];
-        if (void 0x0 !== _0x27bd94.oid && _0x27bd94.level === _0x3a86a9 && _0x27bd94.zone === _0x3ba0b6 && _0x27bd94.oid === _0x5b861b) return _0x27bd94;
+MainGame.prototype.getObject = function(level, zone, oid) {
+    for (var i = 0x0; i < this.objects.length; i++) {
+        var obj = this.objects[i];
+        if (void 0x0 !== obj.oid && obj.level === level && obj.zone === zone && obj.oid === oid) return obj;
     }
 };
-MainGame.prototype.getFlag = function(_0x43af60, _0x365d33) {
-    for (var _0x183430 = 0x0; _0x183430 < this.objects.length; _0x183430++) {
-        var _0x5819ce = this.objects[_0x183430];
-        if (_0x5819ce.level === _0x43af60 && _0x5819ce.zone === _0x365d33 && _0x5819ce instanceof _0xadcd81) return _0x5819ce;
+MainGame.prototype.getFlag = function(level, zone) {
+    for (var i = 0x0; i < this.objects.length; i++) {
+        var obj = this.objects[i];
+        if (obj.level === level && obj.zone === zone && obj instanceof FlagpoleObject) return obj;
+    }
+};
+MainGame.prototype.getAxe = function(level, zone) {
+    for (var i = 0x0; i < this.objects.length; i++) {
+        var obj = this.objects[i];
+        if (obj.level === level && obj.zone === zone && obj instanceof AxeObject) return obj;
     }
 };
 MainGame.prototype.getText = function(_0x684bab, _0x1988a8, _0x26b734) {
@@ -6738,33 +6745,17 @@ function GameClient() {
     this.audioElement.volume = 0.2;
     this.audioElement.loop = true;
     this.audioElement.play();
+    this.statusUpdater = null;
 }
 GameClient.prototype.init = function() {
-    var gameClientLocal = this;
     document.getElementById("log").style.display = "none";
     document.getElementById("link-patch").style.display = "";
     document.getElementById("main-number").style.display = "";
     if (!this.goToLobby)
         this.menu.disclaim.show();
+    var that = this;
     setTimeout(function() {
-        gameClientLocal.menu.load.show();
-        
-        setInterval(function() {
-            if (gameClient.ingame()) return;
-            $.ajax({
-                'url': "status",
-                'type': "GET",
-                'timeout': 0xbb8,
-                'success': function(_0x497cbd) {
-                    if (_0x497cbd.result) {
-                        gameClientLocal.menu.error.show(_0x497cbd.result);
-                    } else {
-                        gameClientLocal.menu.main.number.innerHTML = _0x497cbd.active;
-                    }
-                },
-                cache: false
-            });
-        }, 1000);
+        that.menu.load.show();
 
         if (gameClient.goToLobby) {
             var name = Cookies.get("name");
@@ -6775,7 +6766,26 @@ GameClient.prototype.init = function() {
             return;
         }
 
-        gameClientLocal.menu.main.show();
+        var updateStatus = function(firstTry) {
+            $.ajax({
+                'url': "status",
+                'type': "GET",
+                'timeout': 0xbb8,
+                'success': function(_0x497cbd) {
+                    if (_0x497cbd.result) {
+                        firstTry && that.menu.error.show(_0x497cbd.result);
+                    } else {
+                        that.menu.main.number.innerHTML = _0x497cbd.active;
+                    }
+                },
+                cache: false
+            });
+        };
+
+        updateStatus(true);
+        that.statusUpdater = setInterval(updateStatus, 1000);
+
+        that.menu.main.show();
     }, this.goToLobby ? 100 : 5000);
 };
 GameClient.prototype.load = function(data) {
@@ -6800,6 +6810,7 @@ GameClient.prototype.ingame = function() {
 GameClient.prototype.join = function(name, team, priv, skin) {
     if (gameClient.audioElement !== undefined)
         gameClient.audioElement.pause();
+    clearInterval(this.statusUpdater);
     this.ingame() ? this.menu.error.show("An error occured while starting game...") : (this.menu.load.show(), this.net.connect(name, team, priv, skin));
 };
 GameClient.prototype.close = function() {
