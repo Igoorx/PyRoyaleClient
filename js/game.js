@@ -1,4 +1,4 @@
-var SKINCOUNT=5;
+var SKINCOUNT=20;
 var DEFAULT_PLAYER_NAME="INFRINGIO";
 var levelSelectors = [
                    {shortId: '?', longId:''}, 
@@ -8,7 +8,8 @@ var levelSelectors = [
                    {shortId: '5', longId:'world-5' },
                    {shortId: '6', longId:'world-6' },
                    {shortId: 'L', longId:'world-l1'},
-                   {shortId: 'P', longId:'world-p' }
+                   {shortId: 'P', longId:'world-p' },
+                   {shortId: 'S', longId:'world-s' }
                  ];
 var Utils = {},
     Vector2D = {
@@ -2134,7 +2135,7 @@ PlayerObject.prototype.powerup = function(_0x316532) {
 PlayerObject.prototype.axe = function(_0x5050d5) {
     (_0x5050d5 = this.game.getText(this.level, this.zone, _0x5050d5.toString())) || (_0x5050d5 = this.game.getText(this.level, this.zone, "too bad"));
     var axe = this.game.getAxe(this.level, this.zone);
-    _0x5050d5 && (this.moveSpeed = 0, this.pos = Vector2D.make(axe.pos.x, axe.pos.y), this.autoTarget = Vector2D.add(_0x5050d5.pos, Vector2D.make(0x0, -1.6)));
+    _0x5050d5 && (this.moveSpeed = 0, this.pos = Vector2D.copy(axe.pos), this.autoTarget = Vector2D.add(_0x5050d5.pos, Vector2D.make(0x0, -1.6)));
 };
 PlayerObject.prototype.star = function() {
     this.starMusic && (this.starMusic.stop(), this.starMusic = void 0x0);
@@ -4001,7 +4002,7 @@ _0x30df09.NAME = "BULLET";
 _0x30df09.ANIMATION_RATE = 0x3;
 _0x30df09.SPEED = 0.215;
 _0x30df09.BONK_TIME = 0x5a;
-_0x30df09.BONK_IMP = Vector2D.make(0.25, 0.4);
+_0x30df09.BONK_IMP = Vector2D.make(0, 0.4);
 _0x30df09.BONK_DECEL = 0.925;
 _0x30df09.BONK_FALL_SPEED = 0.5;
 _0x30df09.BONK_FALL_ACCEL = 0.085;
@@ -4050,7 +4051,7 @@ _0x30df09.prototype.playerCollide = function(_0x15f7e9) {
     this.dead || this.garbage || _0x15f7e9.damage(this);
 };
 _0x30df09.prototype.playerStomp = function(_0x53a4e6) {
-    this.dead || this.garbage || (_0x53a4e6.bounce(), this.play("sfx/stomp.wav", 0x1, 0.04), this.game.out.push(_0x30e075.encode(this.level, this.zone, this.oid, 0x1)));
+    this.dead || this.garbage || (this.bonk(), _0x53a4e6.bounce(), this.play("sfx/stomp.wav", 0x1, 0.04), this.game.out.push(_0x30e075.encode(this.level, this.zone, this.oid, 0x1)));
 };
 _0x30df09.prototype.playerBump = function(_0x5a4a67) {
     this.playerCollide(_0x5a4a67);
@@ -6648,7 +6649,7 @@ function LobbyGame(_0x5a8616) {
     MainGame.call(this, _0x5a8616);
     this.lobbyTimer = 0x5a;
     if (gameClient.audioElement !== undefined) {
-        gameClient.audioElement.setAttribute('src', LOBBY_MUSIC_URL);
+        gameClient.audioElement.setAttribute('src', gameClient.net.skin == 13 ? "audio/music/pepsi.mp3" : LOBBY_MUSIC_URL);
         gameClient.audioElement.load;
         gameClient.audioElement.volume = 0.18;
         gameClient.audioElement.loop = true;
