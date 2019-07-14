@@ -9,7 +9,8 @@ var levelSelectors = [
                    {shortId: '6', longId:'world-6' },
                    {shortId: 'L', longId:'world-l1'},
                    {shortId: 'P', longId:'world-p' },
-                   {shortId: 'S', longId:'world-s' }
+                   {shortId: 'S', longId:'world-s' },
+                   {shortId: 'M', longId:'world-m' }
                  ];
 var Utils = {},
     Vector2D = {
@@ -5834,10 +5835,10 @@ Display.prototype.drawUI = function() {
         context.drawImage(skinTexture, sprite[0x0], sprite[0x1], Display.TEXRES, Display.TEXRES, 0x4 + txtWidth + 0x10, 0x28, 0x18, 0x18),
         context.fillText('x' + (0x9 >= this.game.lives ? '0' + this.game.lives : this.game.lives), 0x4 + txtWidth + 0x10 + 0x1a, 0x40),
         this.game instanceof MainGame ? (
-            txt = this.game.getGameTimer(),
+            txt = this.game.getGameTimer(this.game.touchMode),
             txtWidth = context.measureText(txt).width,
             context.fillText(txt, (canvasWidth / 2) - (txtWidth / 2), 0x20),
-            txt = this.game.remain + " PLAYERS REMAIN",
+            txt = this.game.remain + (this.game.touchMode ? '' : " PLAYERS REMAIN"),
             txtWidth = context.measureText(txt).width,
             context.fillText(txt, canvasWidth - txtWidth - 0x8, 0x20))
         : this.game instanceof LobbyGame && (
@@ -6068,6 +6069,9 @@ function MainGame(data) {
     this.input = new _0x2406bb(this, this.canvas);
     this.display = new Display(this, this.container, this.canvas, data.resource);
     this.audio = new Audio(this);
+    if (!(this instanceof LobbyGame) && !(this instanceof JailGame) && gameClient.net.skin === 13) {
+        this.audio.muteMusic = true;
+    }
     this.objects = [];
     this.team = this.pid = void 0x0;
     this.players = [];
@@ -6143,9 +6147,9 @@ MainGame.prototype.updatePlayerList = function(_0x407394) {
     this.players = _0x407394.players;
     void 0x0 !== this.pid && this.updateTeam();
 };
-MainGame.prototype.getGameTimer = function() {
+MainGame.prototype.getGameTimer = function(compact) {
     if (this.gameTimerStopped !== null) return this.gameTimerStopped;
-    if (this.startDelta === undefined) return "00:00:000";
+    if (this.startDelta === undefined) return compact ? "00:00" : "00:00:000";
     var now = Utils.time.now() - this.poleTimes; // get the time now minus the poleTimes
     var diff = now - this.startDelta; // diff in seconds between now and start
     var m = Math.floor(diff / 60000); // get minutes value
@@ -6155,7 +6159,7 @@ MainGame.prototype.getGameTimer = function() {
     if (s < 10) s = "0" + s; // add a leading zero if it's single digit
     if (ms < 10) ms = "00" + ms; // add two leadings zeros if it's single digit
     else if (ms < 100) ms = "0" + ms; // add a leading zero if it's double digit
-    return m + ":" + s + ":" + ms;
+    return m + ":" + s + (compact ? '' : (":" + ms));
 }
 MainGame.prototype.resumeGameTimer = function() {
     if (this.gameTimerStopped === null) return;
@@ -6649,7 +6653,7 @@ function LobbyGame(_0x5a8616) {
     MainGame.call(this, _0x5a8616);
     this.lobbyTimer = 0x5a;
     if (gameClient.audioElement !== undefined) {
-        gameClient.audioElement.setAttribute('src', gameClient.net.skin == 13 ? "audio/music/pepsi.mp3" : LOBBY_MUSIC_URL);
+        gameClient.audioElement.setAttribute('src', gameClient.net.skin === 13 ? "audio/music/pepsi.mp3" : LOBBY_MUSIC_URL);
         gameClient.audioElement.load;
         gameClient.audioElement.volume = 0.18;
         gameClient.audioElement.loop = true;
@@ -6709,7 +6713,7 @@ LobbyGame.prototype.loop = function() {
 LobbyGame.prototype.draw = MainGame.prototype.draw;
 LobbyGame.prototype.destroy = function() {
     MainGame.prototype.destroy.call(this);
-    if (gameClient.audioElement !== undefined) {
+    if (gameClient.audioElement !== undefined && gameClient.net.skin !== 13) {
         gameClient.audioElement.pause();
         gameClient.audioElement.remove();
         gameClient.audioElement = undefined;
