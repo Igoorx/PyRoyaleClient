@@ -6069,7 +6069,7 @@ function MainGame(data) {
     this.input = new _0x2406bb(this, this.canvas);
     this.display = new Display(this, this.container, this.canvas, data.resource);
     this.audio = new Audio(this);
-    if (!(this instanceof LobbyGame) && !(this instanceof JailGame) && gameClient.net.skin === 13) {
+    if (!(this instanceof LobbyGame) && !(this instanceof JailGame) && gameClient.net.skin in SKIN_MUSIC_URL) {
         this.audio.muteMusic = true;
     }
     this.objects = [];
@@ -6653,7 +6653,7 @@ function LobbyGame(_0x5a8616) {
     MainGame.call(this, _0x5a8616);
     this.lobbyTimer = 0x5a;
     if (gameClient.audioElement !== undefined) {
-        gameClient.audioElement.setAttribute('src', gameClient.net.skin === 13 ? "audio/music/pepsi.mp3" : gameClient.net.skin === 18 ? "audio/music/sans.mp3" : LOBBY_MUSIC_URL);
+        gameClient.audioElement.setAttribute('src', gameClient.net.skin in SKIN_MUSIC_URL ? SKIN_MUSIC_URL[gameClient.net.skin] : LOBBY_MUSIC_URL);
         gameClient.audioElement.load;
         gameClient.audioElement.volume = 0.18;
         gameClient.audioElement.loop = true;
@@ -6713,7 +6713,7 @@ LobbyGame.prototype.loop = function() {
 LobbyGame.prototype.draw = MainGame.prototype.draw;
 LobbyGame.prototype.destroy = function() {
     MainGame.prototype.destroy.call(this);
-    if (gameClient.audioElement !== undefined && (gameClient.net.skin !== 13 || gameClient.net.skin !== 18)) {
+    if (gameClient.audioElement !== undefined && !(gameClient.net.skin in SKIN_MUSIC_URL)) {
         gameClient.audioElement.pause();
         gameClient.audioElement.remove();
         gameClient.audioElement = undefined;
