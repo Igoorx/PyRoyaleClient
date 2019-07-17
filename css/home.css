@@ -149,6 +149,20 @@ img {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
+.launchStrong:hover {
+  animation: none;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.launchStrong{
+    font-size: 32px;
+    font-family:SmbWeb;
+    background: none;
+    border: none;
+    color: white;
+    animation: glow 1s infinite alternate;
+}
+
 .players {
   font-size: 20px;
   margin-right: 4px;
@@ -282,8 +296,10 @@ img {
   display:inline-block;
   width: 16px;
   height: 16px;
+  margin: 10px;
   border:2px solid black;
   background: url('../img/game/smb_skin0.png') -208px 0px;
+  transform:scale(2);
 }
 
 .skin-select {
