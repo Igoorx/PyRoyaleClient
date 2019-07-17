@@ -307,8 +307,8 @@ img {
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */
     display: flex;   
     flex-wrap: wrap;
-    width: 110px;
-    margin-top: 60px;
+    width: 440px;
+    margin-top: 80px;
     margin-left: auto;
     margin-right: auto;
     transform: scale(2);
@@ -349,7 +349,20 @@ img {
     padding: 2px 2px 2px 2px;
     border:2px solid black;
 }
+
 .levelSelectRow {
     text-align: center;
     margin: 2px;
+}
+
+.login-result {
+  position: absolute;
+  padding: 5px 32px 2px 32px;
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+  transform: translate(-50%, 10%); /* This is a shorthand of
+                                       translateX(-50%) and translateY(10%) */
+  background-color: rgba(255, 255, 255, 0.25);
+
+  font-family: SmbWeb;
+  font-size: 32px;
 }

@@ -20,9 +20,9 @@
         <link rel='icon' href='img/home/icon.ico'>
         <link rel="shortcut icon" type="image/x-icon" href="img/home/icon.ico" />
         <link rel="apple-touch-icon" sizes="192x192" href="img/home/android-chrome-192x192.png">
-        <meta name="og:image" content="http://marioroyale.tk/img/home/android-chrome-192x192.png">
-        <meta property="og:image" content="http://marioroyale.tk/img/home/android-chrome-192x192.png">
-        <meta name="twitter:image" content="http://marioroyale.tk/img/home/android-chrome-192x192.png">
+        <meta name="og:image" content="http://marioroyale.cyuubi.gq/img/home/android-chrome-192x192.png">
+        <meta property="og:image" content="http://marioroyale.cyuubi.gq/img/home/android-chrome-192x192.png">
+        <meta name="twitter:image" content="http://marioroyale.cyuubi.gq/img/home/android-chrome-192x192.png">
 
         <meta name="theme-color" content="#396B7F" />
         <meta name="msapplication-navbutton-color" content="#396B7F">
@@ -33,9 +33,9 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="HandheldFriendly" content="true">
 
-        <link rel="canonical" href="http://marioroyale.tk/" />
-        <meta name="og:url" content="http://marioroyale.tk/" />
-        <meta property="og:url" content="http://marioroyale.tk/" />
+        <link rel="canonical" href="http://marioroyale.cyuubi.gq/" />
+        <meta name="og:url" content="http://marioroyale.cyuubi.gq/" />
+        <meta property="og:url" content="http://marioroyale.cyuubi.gq/" />
 
         <meta name="og:site_name" content="Mario Royale" />
         <meta property="og:site_name" content="Mario Royale" />
@@ -45,7 +45,7 @@
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@realMarioRoyale" />
 
-        <link rel='stylesheet' type='text/css' href='css/home.css?v=2.1.10'>
+        <link rel='stylesheet' type='text/css' href='css/home.css?v=3.0.0'>
         <link rel='stylesheet' type='text/css' href='css/spinner.css?v=2.1.6'>
         <link rel='stylesheet' type='text/css' href='css/link.css?v=2.1.6'>
         <script>
@@ -71,7 +71,7 @@
         </div>
         <div class="link-l">
           <div class="rtfpn2"></div>
-          <div id="link-patch" class="link-patch" onclick="window.open('./patch.html?v=2.1.11f')" style="display:none;">v2.1.11 Patch Notes</div>
+          <div id="link-patch" class="link-patch" onclick="window.open('./patch.html?v=3.0.0')" style="display:none;">v3.0.0 Patch Notes</div>
         </div>
         <div class="link-w">
           <div id='win' class="win" style="display:none;"></div>
@@ -142,11 +142,9 @@
       <div id='profile' class='container-center' style='display: none;'>
         <div class='name'><input id='profile-nickname' type='text' class='name-input' placeholder='Nickname'/></div>
         <div class='team'><input id='profile-team' type='text' class='team-input' maxlength="3" placeholder='Squad Code'/></div>
-        <div class="skin-select">
-            <div id='profile-skin-select' class="skin-select-inner">
-            </div>
+        <div id='profile-skin-select' class="skin-select">
         </div>
-        <div class='container-bottom'>
+        <div class='container-bottom' style='margin-top:80px'>
           <div class='container-go'>
             <span id ='profile-save' class='launch'>Save</span>
           </div>
@@ -155,7 +153,7 @@
 
       <!-- Guest mode -->
       <div id='name' class='container-center' style='display: none;'>
-        <div class='name'><input id='name-input' type='text' class='name-input' placeholder='Name'/></div>
+        <div class='name'><input id='name-input' type='text' class='name-input' placeholder='Name' maxlength="20"/></div>
         <div class='team'><input id='team-input' type='text' class='team-input' maxlength="3" placeholder='Squad Code'/></div>
         <div class='container-bottom'>
           <div class='container-go'>
@@ -163,34 +161,40 @@
             <span id ='name-launch' class='launch'>Go!</span>
           </div>
         </div>
-        <div class="skin-select">
-            <div id='skin-select' class="skin-select-inner">
-            </div>
+        <div id='skin-select' class="skin-select">
         </div>
       </div>
 
       <!-- Login -->
       <div id='login' class='container-center' style='display: none;'>
         <form action="#login">
-            <div class='name'><input id='login-username-input' type='text' class='name-input' placeholder='UserName'/></div>
+            <div class='name'><input id='login-username-input' type='text' class='name-input' placeholder='UserName' maxlength="20"/></div>
             <div class='name'><input id='login-password-input' type='password' class='name-input' placeholder='Password'/></div>
             <div class='container-bottom'>
                 <input id ='login-do' type="submit" class='launchStrong' value="Login"></input>
+                |
+                <span id ='login-back' class='launch'>Cancel</span>
             </div>
-            <div id="loginResult" class="levelSelectRow">&nbsp;</div>
+            <div id="loginResult" class="login-result">&nbsp;</div>
         </form>
       </div>
 
       <!-- Register -->
       <div id='register' class='container-center' style='display: none;'>
         <form action="#register">
-            <div class='name'><input id='register-username-input' type='text' class='name-input' placeholder='UserName'/></div>
+            <div class='name'><input id='register-username-input' type='text' class='name-input' placeholder='UserName' maxlength='20'/></div>
             <div class='name'><input id='register-password-input' type='password' class='name-input' placeholder='Password'/></div>
             <div class='name'><input id='register-password2-input' type='password' class='name-input' placeholder='Password again'/></div>
+            <div class='name'>
+              <img id='register-captcha' alt='Captcha' />
+              <input id='register-captcha-input' type='text' class='name-input' placeholder='Captcha' maxlength='5' style='width: 480px'/>
+            </div>
             <div class='container-bottom'>
                 <input id ='register-do' type="submit" class='launchStrong' value="Register"></input>
+                |
+                <span id ='register-back' class='launch'>Cancel</span>
             </div>
-            <div id="registerResult" class="levelSelectRow">&nbsp;</div>
+            <div id="registerResult" class="login-result">&nbsp;</div>
         </form>
       </div>
 
@@ -222,6 +226,6 @@
       <script src='js/lib/cookie/js.cookie.min.js'></script>
       
       <!-- Core -->
-      <script src='js/core.js?v=2.1.11f'></script>
+      <script src='js/core.js?v=3.0.0'></script>
     </body>
 </html>

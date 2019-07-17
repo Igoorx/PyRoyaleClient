@@ -1087,6 +1087,7 @@ MainScreen.prototype.showLogin = function() {
 
 MainScreen.prototype.showRegister = function() {
     gameClient.menu.register.show();
+    gameClient.requestCaptcha();
 };
 
 MainScreen.prototype.startPad = function() {
@@ -1166,6 +1167,7 @@ MainAsMemberScreen.prototype.show = function(data) {
     this.squad = data.squad;
     this.skin = data.skin;
     this.isPrivate = savedPriv ? (savedPriv == "true") : false;
+    this.updPrivateBtn();
     this.element.style.display = "block";
     if (gameClient.goToLobby) {
         this.launch();
@@ -1392,10 +1394,14 @@ function LoginScreen() {
     this.userNameInput = document.getElementById("login-username-input");
     this.passwordInput = document.getElementById("login-password-input");
     this.launchBtn = document.getElementById("login-do");
+    this.backBtn = document.getElementById("login-back");
     this.resultLabel = document.getElementById("loginResult");
     var loginScreen = this;
     this.launchBtn.onclick = function() {
         loginScreen.launch();
+    };
+    this.backBtn.onclick = function() {
+        loginScreen._onBack();
     };
 }
 LoginScreen.prototype.show = function() {
@@ -1408,7 +1414,7 @@ LoginScreen.prototype.hide = function() {
     this.element.style.display = "none";
 };
 
-LoginScreen.prototype.onBack = function() {
+LoginScreen.prototype._onBack = function() {
     gameClient.menu.main.show();
 };
 LoginScreen.prototype.reportError = function(message) {
@@ -1435,11 +1441,16 @@ function RegisterScreen() {
     this.userNameInput = document.getElementById("register-username-input");
     this.passwordInput = document.getElementById("register-password-input");
     this.passwordInput2 = document.getElementById("register-password2-input");
+    this.captchaInput = document.getElementById("register-captcha-input");
     this.launchBtn = document.getElementById("register-do");
+    this.backBtn = document.getElementById("register-back");
     this.resultLabel = document.getElementById("registerResult");
     var registerScreen = this;
     this.launchBtn.onclick = function() {
         registerScreen.launch();
+    };
+    this.backBtn.onclick = function() {
+        registerScreen._onBack();
     };
 }
 RegisterScreen.prototype.show = function() {
@@ -1451,7 +1462,7 @@ RegisterScreen.prototype.show = function() {
 RegisterScreen.prototype.hide = function() {
     this.element.style.display = "none";
 };
-RegisterScreen.prototype.onBack = function() {
+RegisterScreen.prototype._onBack = function() {
     gameClient.menu.main.show();
 };
 RegisterScreen.prototype.reportError = function(message) {
@@ -1463,8 +1474,13 @@ RegisterScreen.prototype.launch = function() {
     var userName = this.userNameInput.value;
     var pw = this.passwordInput.value;
     var pw2 = this.passwordInput2.value;
-    if (userName.length < 5) {
+    var captcha = this.captchaInput.value;
+    if (userName.length < 3) {
         this.reportError("Username is too short");
+        return;
+    }
+    if (userName.length > 20) {
+        this.reportError("Username is too long");
         return;
     }
     if (pw.length < 8) {
@@ -1475,7 +1491,11 @@ RegisterScreen.prototype.launch = function() {
         this.reportError("Passwords don't match");
         return;
     }
-    gameClient.register(userName, pw);
+    if (captcha.length != 5) {
+        this.reportError("Invalid captcha");
+        return;
+    }
+    gameClient.register(userName, pw, captcha);
 };
 
 
@@ -1502,8 +1522,9 @@ function Net() {
 Net.CONNECTTYPE = {};
 Net.CONNECTTYPE.GUEST = 0;
 Net.CONNECTTYPE.LOGIN = 1;
-Net.CONNECTTYPE.REGISTER = 2;
-Net.CONNECTTYPE.RESUME = 3;
+Net.CONNECTTYPE.REQ_CAPTCHA = 2;
+Net.CONNECTTYPE.REGISTER = 3;
+Net.CONNECTTYPE.RESUME = 4;
 Net.prototype.connected = function() {
     return void 0x0 !== this.webSocket && this.webSocket.readyState !== WebSocket.CLOSED;
 };
@@ -1558,23 +1579,24 @@ Net.prototype.connect = function(args) {
         });
     } else if (connectType == Net.CONNECTTYPE.LOGIN) {
         var username = args[1];
-        var pw = args[2];
         this.username = username;
-        this.pw = pw;
         this.send({
             'type': "llg",
             'username': this.username,
-            'password': this.pw
+            'password': args[2]
+        });
+    } else if (connectType == Net.CONNECTTYPE.REQ_CAPTCHA) {
+        this.send({
+            'type': "lrc"
         });
     } else if (connectType == Net.CONNECTTYPE.REGISTER) {
         var username = args[1];
-        var pw = args[2];
         this.username = username;
-        this.pw = pw;
         this.send({
             'type': "lrg",
             'username': this.username,
-            'password': this.pw
+            'password': args[2],
+            'captcha': args[3]
         });
     } else if (connectType == Net.CONNECTTYPE.RESUME) {
         var session = args[1];
@@ -1650,6 +1672,8 @@ LobbyState.prototype.handlePacket = function(data) {
             return this.loggedIn(data), !0x0;
         case "llg":
             return this.handleLoginResult(data), !0x0;
+        case "lrc":
+            return this.handleRequestCaptcha(data), !0x0;
         case "lrg":
             return this.handleRegisterResult(data), !0x0;
         case "lrs":
@@ -1677,6 +1701,7 @@ LobbyState.prototype.handleLogoutResult = function(data) {
 };
 LobbyState.prototype.handleLoginResult = function(data) {
     if (data.status) {
+        gameClient.stopMainScreenUpdates();
         gameClient.menu.mainAsMember.show(data.msg);
     } else {
         Cookies.remove("session");
@@ -1684,8 +1709,18 @@ LobbyState.prototype.handleLoginResult = function(data) {
         gameClient.menu.login.reportError(data.msg);
     }
 };
+LobbyState.prototype.handleRequestCaptcha = function(data) {
+    if (data.data) {
+        var img = document.getElementById("register-captcha");
+        img.src = "data:image/png;base64, " + data.data;
+    } else {
+        document.getElementById('register-captcha-input').style.display = 'none';
+    }
+    gameClient.menu.register.show();
+};
 LobbyState.prototype.handleRegisterResult = function(data) {
     if (data.status) {
+        gameClient.stopMainScreenUpdates();
         gameClient.menu.mainAsMember.show(data.msg);
     } else {
         gameClient.menu.register.show();
@@ -7130,12 +7165,12 @@ GameClient.prototype.init = function() {
     setTimeout(function() {
         that.menu.load.show();
 
-        if (gameClient.goToLobby && gameClientLocal.session == undefined) {
+        if (that.goToLobby && that.session === undefined) {
             var name = Cookies.get("name");
             var team = Cookies.get("team");
             var priv = Cookies.get("priv");
             var skin = Cookies.get("skin");
-            gameClient.join(name ? name : "", team ? team : "", priv === "true", skin ? parseInt(skin) : 0);
+            that.join(name ? name : "", team ? team : "", priv === "true", skin ? parseInt(skin) : 0);
             return;
         }
 
@@ -7190,19 +7225,18 @@ GameClient.prototype.join = function(name, team, priv, skin) {
     this.ingame() ? this.menu.error.show("An error occured while starting game...") : (this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.GUEST, name, team, priv, skin]));
 };
 GameClient.prototype.login = function(username, pw) {
-    this.stopMainScreenUpdates();
     this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.LOGIN, username, pw]);
 };
 GameClient.prototype.logout = function(username, pw) {
     this.net.send({'type': "llo"});
 };
-GameClient.prototype.register = function(username, pw) {
-    this.stopMainScreenUpdates();
-    this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.REGISTER, username, pw]);
+GameClient.prototype.requestCaptcha = function() {
+    this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.REQ_CAPTCHA]);
+};
+GameClient.prototype.register = function(username, pw, captcha) {
+    this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.REGISTER, username, pw, captcha]);
 };
 GameClient.prototype.resumeSession = function(session) {
-    if (gameClient.audioElement !== undefined)
-        gameClient.audioElement.pause();
     this.menu.load.show(), this.net.connect([Net.CONNECTTYPE.RESUME, session]);
 };
 GameClient.prototype.close = function() {
