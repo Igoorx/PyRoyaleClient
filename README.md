@@ -1,4 +1,4 @@
-# THIS REPOSITORY IS NOW BEING MAINTAINED AT [A NEW LOCATION, CLICK HERE.](https://github.com/mroyale/mroyale-server)
+# THIS REPOSITORY IS NOW BEING MAINTAINED AT [A NEW LOCATION, CLICK HERE.](https://github.com/mroyale/mroyale-client)
 
 # PyRoyaleClient
 This repository is only for the development of the Mario Royale client source code.
